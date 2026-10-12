@@ -1,0 +1,8 @@
+export type Kind = 'DNA' | 'RNA' | 'Protein'
+export interface Project { id:string; title:string; description:string; created_at:string }
+export interface Sequence {id:string;project_id:string;identifier:string;description:string;sequence:string;kind:Kind;sha256:string;source_id:string|null;created_at:string;provenance:Record<string,unknown>}
+export interface Params {window:number;step:number;genetic_code:number;min_orf_nt:number;start_codons:string[];ph:number;hydropathy_window:number}
+export interface ORF {start:number;end:number;strand:number;frame:number;length_nt:number;protein:string;stop_codon:string}
+export interface Result {length:number;kind:Kind;counts:Record<string,number>;entropy_bits:number;warnings:string[];versions:Record<string,string>;method:string;canonical?:number;ambiguous?:number;gc_percent?:number|null;gc_total_percent?:number;at_percent?:number|null;windows?:{start:number;end:number;gc:number|null;skew:number|null;canonical:number}[];dinucleotides?:Record<string,number>;reverse_complement?:string;converted?:string;translations?:{frame:number;protein:string;partial_bases:number}[];orfs?:ORF[];properties?:Record<string,number>|null;hydropathy?:{position:number;value:number}[];charge_curve?:{ph:number;charge:number}[]}
+export interface Run {id:string;project_id:string;sequence_id:string;input_hash:string;parameters:Params;status:'queued'|'running'|'completed'|'failed'|'cancelled';result:Result|null;error:string|null;created_at:string;finished_at:string|null}
+export interface Health {status:string;version:string;genetic_codes:{id:number;name:string;starts:string[]}[]}
